@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Therapy Session</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #e5ddd5; margin: 0; }
+        .chat-container { max-width: 800px; margin: 20px auto; background: white; height: 90vh; display: flex; flex-direction: column; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+        .header { background: #075e54; color: white; padding: 15px; border-radius: 10px 10px 0 0; display: flex; justify-content: space-between; }
+        .chat-box { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; }
+        .message { max-width: 70%; padding: 10px 15px; margin: 5px 0; border-radius: 10px; line-height: 1.5; }
+        .user { align-self: flex-end; background: #dcf8c6; }
+        .assistant { align-self: flex-start; background: #f1f0f0; }
+        .input-area { padding: 20px; background: #f0f0f0; display: flex; border-radius: 0 0 10px 10px; }
+        input[type="text"] { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
+        button { margin-left: 10px; padding: 10px 20px; background: #075e54; color: white; border: none; border-radius: 20px; cursor: pointer; }
+        a { color: white; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <span>AI Therapist Session</span>
+            <a href="/logout">Logout</a>
+        </div>
+        <div class="chat-box" id="chatBox">
+            {% for role, content in history %}
+                <div class="message {{ role }}">
+                    <strong>{{ 'You' if role == 'user' else 'Therapist' }}:</strong><br>
+                    {{ content }}
+                </div>
+            {% endfor %}
+        </div>
+        <form class="input-area" method="POST">
+            <input type="text" name="message" placeholder="Type your feelings here..." autocomplete="off" autofocus required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        // Auto scroll to bottom
+        var chatBox = document.getElementById("chatBox");
+        chatBox.scrollTop = chatBox.scrollHeight;
+    </script>
+</body>
+</html>
