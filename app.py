@@ -1,25 +1,28 @@
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 import sqlite3
 import smtplib
-import os
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import google.generativeai as genai
 
 app = Flask(__name__)
-app.secret_key = 'a6e8b0ac518f6eedebe95d47ea375de1'
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 # --- CONFIGURATION ---
 
 # 1. GOOGLE GEMINI API KEY
 # I have inserted your specific key here.
-GOOGLE_API_KEY = "AIzaSyAvZx9phNmXdCSyOkdnIjydLIdHvHHxQtA"
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 genai.configure(api_key=GOOGLE_API_KEY)
 
 # 2. Email Configuration
 SENDER_EMAIL = "therapistaimentalhealth@gmail.com"
 # CORRECTED PASSWORD (Spaces removed so Python can read it)
-SENDER_PASSWORD = "psyinfjcrvimrstm" 
+SENDER_PASSWORD = os.getenv("SENDER_PASSWORD")
 
 # --- DATABASE SETUP ---
 def init_db():
